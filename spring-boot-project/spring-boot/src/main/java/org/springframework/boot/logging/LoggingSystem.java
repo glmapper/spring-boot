@@ -67,6 +67,7 @@ public abstract class LoggingSystem {
 
 	/**
 	 * Reset the logging system to be limit output. This method may be called before
+	 * 日志系统初始化之前需要处理的事情。抽象方法，不同的日志架构进行不同的处理
 	 * {@link #initialize(LoggingInitializationContext, String, LogFile)} to reduce
 	 * logging noise until the system has been fully initialized.
 	 */
@@ -74,6 +75,7 @@ public abstract class LoggingSystem {
 
 	/**
 	 * Fully initialize the logging system.
+	 * 初始化日志系统。默认不进行任何处理，需子类进行初始化工作
 	 * @param initializationContext the logging initialization context
 	 * @param configLocation a log configuration location or {@code null} if default
 	 * initialization is required
@@ -84,6 +86,8 @@ public abstract class LoggingSystem {
 	}
 
 	/**
+	 * 日志系统的清除工作。默认不进行任何处理，需子类进行清除工作
+	 *
 	 * Clean up the logging system. The default implementation does nothing. Subclasses
 	 * should override this method to perform any logging system-specific cleanup.
 	 */
@@ -91,6 +95,10 @@ public abstract class LoggingSystem {
 	}
 
 	/**
+	 *
+	 * 返回一个Runnable用于当jvm退出的时候处理日志系统关闭后需要进行的操作，默认返回null，也就是什么都不做
+	 *
+	 *
 	 * Returns a {@link Runnable} that can handle shutdown of this logging system when the
 	 * JVM exits. The default implementation returns {@code null}, indicating that no
 	 * shutdown is required.
@@ -110,6 +118,10 @@ public abstract class LoggingSystem {
 	}
 
 	/**
+	 *
+	 * 抽象方法，用于设置对应logger的级别
+	 *
+	 *
 	 * Sets the logging level for a given logger.
 	 * @param loggerName the name of the logger to set ({@code null} can be used for the
 	 * root logger).
